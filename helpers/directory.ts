@@ -310,7 +310,7 @@ export async function calculateStatistics(devpoolIssues: GitHubIssue[]) {
     if ("repo" in issue && issue.repo != DEVPOOL_REPO_NAME) return;
 
     const linkedRepoFromBody = issue.body?.match(/https:\/\/github.com\/[^/]+\/[^/]+/);
-    const linkedRepoFromBodyForked = issue.body?.match(/https:\/\/www.github.com\/[^/]+\/[^/]+/);
+    const linkedRepoFromBodyForked = issue.body?.match(/https:\/\/www\.github\.com\/[^/]+\/[^/]+/);
 
     let shouldExclude = optInOptOut.out.some((orgOrRepo) => linkedRepoFromBody?.[0].includes(orgOrRepo));
     shouldExclude = shouldExclude || optInOptOut.out.some((orgOrRepo) => linkedRepoFromBodyForked?.[0].includes(orgOrRepo));
