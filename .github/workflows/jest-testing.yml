@@ -17,7 +17,7 @@ env:
   DEVPOOL_REPO_NAME: "devpool-directory"
 jobs:
   testing:
-    permissions: READ-ALL
+    permissions: READ
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v4
