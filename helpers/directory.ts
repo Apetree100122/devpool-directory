@@ -1,15 +1,9 @@
-import { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";
-import { Octokit } from "@octokit/rest";
-import optInOptOut from "../opt.json";
-import _projects from "../projects.json";
-import { commitTwitterMap } from "./git";
-import { TwitterMap } from "./initialize-twitter-map";
-import twitter from "./twitter";
+import { RestEndpointMethodTypes } from "@octokit/plugin-rest-endpoint-methods";import { Octokit } from "@octokit/rest";
+import optInOptOut from "../opt.json";import _projects 
+  from "../projects.json";import { commitTwitterMap } from "./git"; import { TwitterMap }from "./initialize-twitter-map";import twitter from "./twitter";
 
-const PRICING_NOT_SET = "Pricing: not set";
-
-export const DEVPOOL_OWNER_NAME = process.env.DEVPOOL_OWNER_NAME as string;
-export const DEVPOOL_REPO_NAME = process.env.DEVPOOL_REPO_NAME as string;
+const PRICING_NOT_SET = "Pricing: not set"; export const DEVPOOL_OWNER_NAME = process.env.DEVPOOL_OWNER_NAME 
+  as string; export const DEVPOOL_REPO_NAME = process.env.DEVPOOL_REPO_NAME as string;
 
 if (!DEVPOOL_OWNER_NAME || !DEVPOOL_REPO_NAME) {
   throw new Error("DEVPOOL_OWNER_NAME or DEVPOOL_REPO_NAME not set");
@@ -537,31 +531,22 @@ async function setStateChanges(projectIssues: GitHubIssue[], projectIssue: GitHu
       }
     }
   }
-
   return newState;
 }
-
-async function setUnavailableLabelToIssue(
-  projectIssue: GitHubIssue,
-  devpoolIssue: GitHubIssue,
-  metaChanges: { labels: boolean },
-  labelRemoved: string[],
-  originals: string[],
-  newState: "open" | "closed"
-) {
-  // Apply the "Unavailable" label to the devpool issue if the project issue is assigned to someone
-  if (
-    // only if the devpool issue is closed
-    (newState === "closed" || devpoolIssue.state === "closed") &&
-    // only if project issue is open
-    projectIssue.state === "open" &&
-    // only if the project issue is assigned to someone
-    projectIssue.assignee?.login &&
-    // only if the devpool issue doesn't have the "Unavailable" label
+async function setUnavailableLabelToIssue(projectIssue: GitHubIssue,
+  devpoolIssue: GitHubIssue,metaChanges: { labels: boolean },
+  labelRemoved: string[], originals: string[],
+  newState: "open" | "closed") { //Apply the 
+  "Unavailable" label to the devpool issue if the project issue is assigned to someoneif (// only if the 
+    devpool issue is closed(newState === "closed" || devpoolIssue.state === "closed") &&
+    //  only if project issue 
+    is open projectIssue.state === "open" &&
+    //only if the project issue is
+    assigned to someone projectIssue.assignee?.login &&
+    //
+    only if the devpool issue doesn't have the "Unavailable" label
     !devpoolIssue.labels.some((label) => (label as GitHubLabel).name === LABELS.UNAVAILABLE)
-  ) {
-    try {
-      await octokit.rest.issues.addLabels({
+  ) {try {await octokit.rest.issues.addLabels({
         owner: DEVPOOL_OWNER_NAME,
         repo: DEVPOOL_REPO_NAME,
         issue_number: devpoolIssue.number,
@@ -569,23 +554,15 @@ async function setUnavailableLabelToIssue(
       });
     } catch (err) {
       console.log(err);
-    }
-  } else if (projectIssue.state === "closed" && devpoolIssue.labels.some((label) => (label as GitHubLabel).name === LABELS.UNAVAILABLE)) {
-    try {
-      await octokit.rest.issues.removeLabel({
-        owner: DEVPOOL_OWNER_NAME,
-        repo: DEVPOOL_REPO_NAME,
-        issue_number: devpoolIssue.number,
+    }}else if 
+    (projectIssue.state === "closed" && devpoolIssue.labels.some((label) => (label as GitHubLabel).name === LABELS.UNAVAILABLE)) {
+    try {await octokit.rest.issues.removeLabel({owner: DEVPOOL_OWNER_NAME,repo: DEVPOOL_REPO_NAME,issue_number: devpoolIssue.number,
         name: LABELS.UNAVAILABLE,
-      });
-
-      console.log(`Removed label: ${LABELS.UNAVAILABLE}\n${devpoolIssue.html_url} - (${projectIssue.html_url})`);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+                                               });
+         console.log(`Removed label:                                                               
+         ${LABELS.UNAVAILABLE}\n${devpoolIssue.html_url} - (${projectIssue.html_url})`)}console.log(err);
+  }}
 }
-
 function areEqual(a: string[], b: string[]) {
   return a.sort().join(",") === b.sort().join(",");
 }
