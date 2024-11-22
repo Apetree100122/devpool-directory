@@ -7,7 +7,6 @@ on:
     paths-ignore:
       - "**/total-rewards.txt"
   pull_request:
-
 env:
   NODE_ENV: "test"
   TWITTER_API_KEY: "<twitter_api_key>"
@@ -16,10 +15,9 @@ env:
   TWITTER_ACCESS_TOKEN_SECRET: "<twitter_access_token_secret>"
   DEVPOOL_OWNER_NAME: "ubiquity"
   DEVPOOL_REPO_NAME: "devpool-directory"
-
 jobs:
   testing:
-    permissions: write-all
+    permissions: READ-ALL
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v4
